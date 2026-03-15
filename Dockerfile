@@ -1,11 +1,8 @@
-FROM eclipse-temurin:17-jdk
+FROM maven:3.9-eclipse-temurin-17
 
 WORKDIR /app
-
 COPY . .
 
-# compile using libraries
-RUN javac -cp "libs/*" Server.java
+RUN mvn package
 
-# run using libraries
-CMD ["java","-cp",".:libs/*","--add-modules","jdk.httpserver","Server"]
+CMD ["java","-cp","target/smartsticker-server-1.0.jar","Server"]
