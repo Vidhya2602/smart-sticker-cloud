@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Sticker Cloud Monitoring Dashboard</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f6f8;
+text-align:center;
+}
+
+h1{
+color:#333;
+}
+
+.status{
+margin:20px;
+padding:15px;
+background:white;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+button{
+padding:12px 20px;
+font-size:16px;
+background:#ff4444;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#cc0000;
+}
+
+table{
+margin:auto;
+margin-top:20px;
+border-collapse:collapse;
+width:80%;
+background:white;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+}
+
+th{
+background:#333;
+color:white;
+}
+
+.alert{
+background:#ffdddd;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+0%{background:#ffdddd;}
+50%{background:#ff4444;color:white;}
+100%{background:#ffdddd;}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🚨 Smart Sticker Cloud Monitoring Dashboard</h1>
+
+<div class="status">
+<h2 id="statusText">No Alerts Yet</h2>
+<p>Your IoT devices are operating normally.</p>
+
+<button onclick="triggerAlert()">Trigger Fake Alert</button>
+</div>
+
+<h2>Alert History</h2>
+
+<table>
+<thead>
+<tr>
+<th>Device ID</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+
+<tbody id="alertTable">
+
+</tbody>
+
+</table>
+
+<script>
+
+function triggerAlert(){
+
+fetch("/alert")
+.then(response => response.text())
+.then(data => {
+
+document.getElementById("statusText").innerHTML="⚠ Tamper Detected!";
+
+let table=document.getElementById("alertTable");
+
+let row=table.insertRow(0);
+
+row.className="alert";
+
+row.insertCell(0).innerHTML="BOX-102";
+row.insertCell(1).innerHTML="Tampered";
+row.insertCell(2).innerHTML=new Date().toLocaleString();
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
