@@ -3,7 +3,8 @@ FROM maven:3.9-eclipse-temurin-17
 WORKDIR /app
 COPY . .
 
-RUN mvn package
+# compile only (not jar)
+RUN mvn compile
 
-# 👇 FORCE RUN COMMAND (fix)
-ENTRYPOINT ["java","-jar","target/smartsticker-server-1.0.jar"]
+# run compiled class directly
+CMD ["java","-cp","target/classes","Server"]
